@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button } from "./Button";
 
 interface SideBarProps {
@@ -15,18 +16,23 @@ export function SideBar({
   selectedGenreId,
   buttonClickCallback
 }: SideBarProps) {
+  const [value, setValue] = useState("")
+
+
   return (
     <nav className="sidebar">
       <span>Watch<p>Me</p></span>
+
+      <input type="text" value={value} onChange={(e) => setValue(e.target.value)} />
 
       <div className="buttons-container">
         {genres.map(genre => (
           <Button
             key={String(genre.id)}
-            title={genre.title}
             iconName={genre.name}
-            onClick={() => buttonClickCallback(genre.id)}
             selected={selectedGenreId === genre.id}
+            onClick={() => buttonClickCallback(genre.id)}
+            title={genre.title}
           />
         ))}
       </div>

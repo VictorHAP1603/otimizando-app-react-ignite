@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { MovieCard } from "./MovieCard";
 
 interface ContentProps {
@@ -19,7 +20,7 @@ interface ContentProps {
   }>;
 }
 
-export function Content({ selectedGenre, movies }: ContentProps) {
+function ContentComponent({ selectedGenre, movies }: ContentProps) {
   return (
     <div className="container">
       <header>
@@ -36,3 +37,9 @@ export function Content({ selectedGenre, movies }: ContentProps) {
     </div>
   )
 }
+
+const areEquals = (prevProps: Readonly<React.PropsWithChildren<ContentProps>>, nextProps: Readonly<React.PropsWithChildren<ContentProps>>) => {
+  return Object.is(prevProps.movies, nextProps.movies) && Object.is(prevProps.selectedGenre, nextProps.selectedGenre)
+}
+
+export const Content = memo(ContentComponent, areEquals)
